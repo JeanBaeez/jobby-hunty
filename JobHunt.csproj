@@ -19,8 +19,10 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.22" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.22" />
         <PackageReference Include="Syncfusion.Blazor.Buttons" Version="24.2.4" />
+        <PackageReference Include="Syncfusion.Blazor.Charts" Version="24.2.5" />
         <PackageReference Include="Syncfusion.Blazor.DataForm" Version="24.2.4" />
         <PackageReference Include="Syncfusion.Blazor.Inputs" Version="24.2.4" />
+        <PackageReference Include="Syncfusion.Blazor.Layouts" Version="24.2.5" />
         <PackageReference Include="Syncfusion.Blazor.Navigations" Version="24.2.4" />
         <PackageReference Include="Syncfusion.Blazor.PivotTable" Version="24.2.4" />
         <PackageReference Include="Syncfusion.Blazor.Themes" Version="24.2.4" />

@@ -54,6 +54,11 @@
                                  <SfDatePicker @bind-Value="Job.DateInterviewed" TValue="DateTime?" Placeholder='Choose a Date'></SfDatePicker>
 
                              </div>
+
+                                           <div class="form-group w-50">
+                                  <label for="Source">Source:</label>
+                                    <SfTextBox  ID="Source" Type="InputType.Text" @bind-Value="Job.Source"></SfTextBox>
+                                        </div>
                              
                               </div>
 
@@ -75,6 +80,7 @@
                                   <label for="Notes">Notes:</label>
                                     <SfTextBox ID="Notes" Type="InputType.Text" @bind-Value="Job.Notes"></SfTextBox>
                                         </div>
+                                        
 
 
      <div class="form-group w-50">
@@ -91,7 +97,12 @@
                                   <label for="JobURL">Job URL:</label>
                                     <SfTextBox  ID="JobURL" Type="InputType.Text" @bind-Value="Job.JobUrl"></SfTextBox>
                                         </div>
+                                        
 
+                                           <div class="form-group w-50">
+                                  <label for="Status">Status:</label>
+                                    <SfTextBox  ID="Status" Type="InputType.Text" @bind-Value="Job.Status"></SfTextBox>
+                                        </div>
 
 
 
@@ -130,8 +141,9 @@
              </GridColumn>
             
              <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Position) HeaderText="Position" Width="150"></GridColumn>
-             <GridColumn EditType="EditType.NumericEdit" Field=@nameof(Job.Salary) HeaderText="Salary" Format="C2" Type="ColumnType.Double" TextAlign="TextAlign.Right" Width="130"></GridColumn>
-             <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Location) HeaderText="Location" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+             <GridColumn EditType="EditType.NumericEdit" Field=@nameof(Job.Salary) HeaderText="Salary" Format="C2" Type="ColumnType.Double" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+             <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Location) HeaderText="Location" Format="C2" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+              <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Status) HeaderText="Status"   TextAlign="TextAlign.Right" Width="150"></GridColumn>
          </GridColumns>
      </SfGrid>
  </main>

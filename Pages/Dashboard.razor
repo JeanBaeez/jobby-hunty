@@ -1,6 +1,68 @@
 @page "/Dashboard"
-<h3>Dashboard</h3>
+@inject IJSRuntime JsRuntime
+@inject HttpClient Http
+@using JobHunt.Services.Job
+@inject IJobService _JobService
+
+<div class="mt-xxl-5 container">
+
+
+    <SfDashboardLayout CellSpacing="@(new double[]{10 ,10 })" Columns="5">
+        <DashboardLayoutPanels>
+            <DashboardLayoutPanel>
+                <ContentTemplate>
+                    <div>0</div>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel SizeX=2 Column=1>
+                <ContentTemplate>
+                    <div>1</div>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel SizeY=2 Column=3>
+                <ContentTemplate>
+                    @foreach (var job in jobs)
+                    {
+                        <div class="e-panel-content">
+                            <div>@job.Company</div>
+                            <div>@job.Company</div>
+                            <div>@job.Location</div>
+                        </div>
+                    }
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row=1>
+                <ContentTemplate>
+                    <div>3</div>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row=1 Column=1>
+                <ContentTemplate>
+                    <div>4</div>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row=1 Column=2>
+                <ContentTemplate>
+                    <div>5</div>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+        </DashboardLayoutPanels>
+    </SfDashboardLayout>
+</div>
+
+<style>
+    .e-panel-content {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
 
 @code {
-    
+    private List<Job> jobs = new List<Job>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var jobs = await _JobService.GetJobsAsync();
+    }
+
 }

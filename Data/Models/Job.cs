@@ -36,6 +36,8 @@ public class Job
     public DateTime? DateAccepted { get; set; }
     [Required]
     public string? Status { get; set; }
+    [Required]
+    public string? Source { get; set; }
 
 
 
