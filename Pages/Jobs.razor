@@ -1,0 +1,244 @@
+@page "/Jobs"
+@using JobHunt.Data.Models
+@using JobHunt.Services.Job
+@using EditMode = Syncfusion.Blazor.Grids.EditMode
+ @inject  IJobService _JobService
+ 
+ <main class="container">
+     <div class="flex gap-1 mb-4 justify-content-center align-content-center">
+         <h3>Jobs</h3>
+         <div class=" ">
+             <div >
+                 <SfButton  @onclick="@OpenDialog">Add</SfButton>
+                 
+                 <SfDialog ID="target" ShowCloseIcon="true" Width="900px" Height="800px" IsModal="true" @bind-Visible="@IsVisible"  >
+                     <DialogEvents OnOverlayModalClick="@OnOverlayclick">
+                     </DialogEvents>
+                     <DialogTemplates>
+                         <Content> 
+                             <div class="form container gap-3 flex">
+                                  
+                          <SfDataForm Model="@Job"  ButtonsAlignment="FormButtonsAlignment.Right" OnValidSubmit="OnSubmit" >
+                              <DataAnnotationsValidator />
+                                  <ValidationSummary />
+                            <div class="   row   ">
+
+                          
+                             <div class="col">
+                                 <div class="form-group w-50">
+                                       <label for="Company">Company:</label>
+                                       <SfTextBox  ID="Company" @bind-Value="Job.Company"></SfTextBox>
+                                          <ValidationMessage For="@(() => Job.Company)"></ValidationMessage>
+                                   </div>
+                              <div class="form-group w-50">
+                                  <label for="Position">Position</label>
+                                  <SfTextBox ID="Position" @bind-Value="Job.Position"></SfTextBox>
+                                   <ValidationMessage For="@(() => Job.Position)"></ValidationMessage>
+                              </div>
+                              <div class="form-group w-50">
+                                  <label for="Salary">Salary:</label>
+                                  <SfNumericTextBox ID="Salary" Type="InputType.Number" Format="C2"  @bind-Value="Job.Salary"></SfNumericTextBox>
+                              </div>
+                              <div class="form-group w-50">
+                                  <label for="Description">Description:</label>
+                                  <SfTextBox ID="Description" Type="InputType.Text" @bind-Value="Job.Description"></SfTextBox>
+                               
+                              </div>
+                              <div class="form-group w-50">
+                                  <label for="Location">Location:</label>
+                                  <SfTextBox ID="Location" Type="InputType.Text" @bind-Value="Job.Location"></SfTextBox>
+
+                             </div>
+                               <div class="form-group w-50">
+                                  <label for="DateInterviewed">Date Of Interview:</label>
+                                 <SfDatePicker @bind-Value="Job.DateInterviewed" TValue="DateTime?" Placeholder='Choose a Date'></SfDatePicker>
+
+                             </div>
+                             
+                              </div>
+
+
+
+                              <div class=" col ">
+
+                           
+                                <div class="form-group w-50">
+                                  <label for="WorkType">Work Type:</label>
+                                    <SfTextBox ID="WorkType" Type="InputType.Text" @bind-Value="Job.WorkType"></SfTextBox>
+                                        </div>
+                                           <div class="form-group w-50">
+                                  <label for="DateApplied">Date Applied:</label>
+                                    <SfDatePicker @bind-Value="Job.DateApplied" TValue="DateTime?" Placeholder='Choose a Date'></SfDatePicker>
+                                        </div>
+                                       <div>
+                                         <div class="form-group w-50">
+                                  <label for="Notes">Notes:</label>
+                                    <SfTextBox ID="Notes" Type="InputType.Text" @bind-Value="Job.Notes"></SfTextBox>
+                                        </div>
+
+
+     <div class="form-group w-50">
+                                  <label for="NoContactNametes">Contact Name:</label>
+                                    <SfTextBox ID="ContactName" Type="InputType.Text" @bind-Value="Job.ContactName"></SfTextBox>
+                                        </div>
+
+                                     <div class="form-group w-50">
+                                  <label for="CompanyURL">Company URL:</label>
+                                    <SfTextBox ID="CompanyURL" Type="InputType.Text" @bind-Value="Job.CompanyUrl"></SfTextBox>
+                                        </div>
+
+                                           <div class="form-group w-50">
+                                  <label for="JobURL">Job URL:</label>
+                                    <SfTextBox  ID="JobURL" Type="InputType.Text" @bind-Value="Job.JobUrl"></SfTextBox>
+                                        </div>
+
+
+
+
+
+                                       </div>
+                                       
+                                   
+                                    </div>
+                            </div>
+                          </SfDataForm>
+                             </div>
+                              
+                         
+                         
+                             </Content>
+                     </DialogTemplates>
+                 </SfDialog>
+             </div>
+          
+         </div>
+     </div>
+ 
+     <SfGrid DataSource="@JobList"   Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" AllowPaging="true"
+             >
+                 <GridPageSettings PageSize="5" >
+                 </GridPageSettings>
+                 <GridEditSettings AllowEditOnDblClick="true" Mode="EditMode.Normal"
+                                   AllowAdding="true" AllowEditing="true" AllowDeleting="true" >
+                     
+                 </GridEditSettings>
+         <GridEvents OnActionBegin="OnUpdate"   TValue="Job"></GridEvents>
+             
+         <GridColumns>
+             <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Company) HeaderText="Company" TextAlign="TextAlign.Justify" Width="150">
+                 
+             </GridColumn>
+            
+             <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Position) HeaderText="Position" Width="150"></GridColumn>
+             <GridColumn EditType="EditType.NumericEdit" Field=@nameof(Job.Salary) HeaderText="Salary" Format="C2" Type="ColumnType.Double" TextAlign="TextAlign.Right" Width="130"></GridColumn>
+             <GridColumn EditType="EditType.DefaultEdit" Field=@nameof(Job.Location) HeaderText="Location" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+         </GridColumns>
+     </SfGrid>
+ </main>
+ @code {
+     private bool IsVisible { get; set; } = false;
+    public IEnumerable<Job> JobList { get; set; }
+    public Job Job { get; set; } = new Job();
+    protected override   async Task OnInitializedAsync()
+    {
+      JobList =    await _JobService.GetJobsAsync();
+    }
+    private void OpenDialog()
+    {
+        this.IsVisible = true;
+    }
+    private void OnOverlayclick(OverlayModalClickEventArgs arg)
+    {
+        this.IsVisible = false;
+    }
+
+    private async Task OnSubmit()
+    {
+        try
+        {
+            await _JobService.AddJobAsync(Job);
+            Thread.Sleep(1000);
+            this.IsVisible = false;
+            JobList = await _JobService.GetJobsAsync();
+            StateHasChanged();  
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+
+            throw;
+        }
+    
+    }
+    
+    
+    private async Task OnUpdate(ActionEventArgs<Job> args)
+    {
+
+    switch (args.RequestType){
+        case Syncfusion.Blazor.Grids.Action.BeginEdit:
+            Job = args.Data;
+            break;
+        case Syncfusion.Blazor.Grids.Action.Save:
+           await OnAdd(args);
+            StateHasChanged();
+            break;
+        case Syncfusion.Blazor.Grids.Action.Delete:
+             await OnDelete(args);
+            StateHasChanged();
+            break;
+
+            default: 
+            break;
+  }
+
+
+@* }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.BeginEdit)
+        {
+            Job = args.Data;
+        }
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            await _JobService.UpdateJobAsync(Job);
+            JobList = await _JobService.GetJobsAsync();
+            StateHasChanged();
+        }
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+           // await _JobService.DeleteJobAsync(args.Data as Job);
+            JobList = await _JobService.();
+            StateHasChanged();
+        } *@
+    }
+
+    private async Task OnDelete(ActionEventArgs<Job> args)
+    {
+        await _JobService.DeleteJobAsync(args.Data.Id);
+        JobList = await _JobService.GetJobsAsync();
+        StateHasChanged();
+    }
+    private async Task OnAdd(ActionEventArgs<Job> args)
+    {
+        await _JobService.UpdateJobAsync(args.Data);
+        JobList = await _JobService.GetJobsAsync();
+        StateHasChanged();
+    }
+
+  
+
+
+
+ }
+ 
+ <style>
+    #target  {
+       min-height: 500px;
+              height: 899px;
+              position: relative;
+                width: 50%;
+                
+       
+    }
+</style>
