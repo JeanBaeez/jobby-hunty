@@ -9,34 +9,38 @@
 
     <SfDashboardLayout CellSpacing="@(new double[]{10 ,10 })" Columns="5">
         <DashboardLayoutPanels>
-            <DashboardLayoutPanel>
-                <ContentTemplate>
-                    <div>0</div>
-                </ContentTemplate>
-            </DashboardLayoutPanel>
-            <DashboardLayoutPanel SizeX=2 Column=1>
-                <ContentTemplate>
-                    <div>1</div>
-                </ContentTemplate>
-            </DashboardLayoutPanel>
-            <DashboardLayoutPanel SizeY=2 Column=3>
+            <DashboardLayoutPanel SizeY=1 SizeX=1 Column=1>
                 <ContentTemplate>
                     @foreach (var job in jobs)
                     {
                         <div class="e-panel-content">
-                          
+
                             <div class="fw-bold">@job.Company</div>
                             <div>@job.DateApplied.Value.ToShortDateString()</div>
                         </div>
                     }
                 </ContentTemplate>
             </DashboardLayoutPanel>
-            <DashboardLayoutPanel Row=1>
+            <DashboardLayoutPanel SizeX=4 SizeY=5 Column=4>
                 <ContentTemplate>
-                    <div>3</div>
+                    <div>
+                        <MudChart ChartType="ChartType.Bar" ChartSeries="@ChartSeries" @bind-SelectedIndex="Index"
+                            XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+                    </div>
                 </ContentTemplate>
             </DashboardLayoutPanel>
-        
+
+            <DashboardLayoutPanel Row=1>
+                <ContentTemplate>
+                    <div>
+                        <div class="e-panel-content">
+                            <div class="display-3 d-xl-block">Total Jobs#</div>
+                            <span class="display-3">@JobCount</span>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+
         </DashboardLayoutPanels>
     </SfDashboardLayout>
 </div>
@@ -50,11 +54,46 @@
 
 @code {
     private IEnumerable<Job> jobs;
+    private int JobCount = 0;
+    private int Index = -1;
+    private string[] XAxisLabels = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
+"Nov", "Dec" };
+
+    private List<ChartSeries> ChartSeries = new List<ChartSeries>();
+
 
 
     protected override async Task OnInitializedAsync()
     {
-        jobs =  await _JobService.GetJobsAsync();
+        jobs = await _JobService.GetJobsAsync();
+        jobs = jobs.OrderByDescending(x => x.DateApplied).Take(5);
+        JobCount = jobs.Count();
+
+        foreach (var job in jobs)
+        {
+            var month = job.DateApplied.Value.Month;
+            if (job.DateApplied.Value.Month == month)
+            {
+                ChartSeries.Add(new ChartSeries()
+                    {
+                        Name = job.DateApplied.Value.Month.ToString("MMMM"),
+                        Data = new double[] { jobs.Count(x => x.Equals(month)) }
+                    }
+                );
+            }
+
+
+            else
+                ChartSeries.Add(new ChartSeries()
+                    {
+                        Name = job.DateApplied.Value.Month.ToString("MMMM"),
+                        Data = new double[] { job.DateApplied.Value.Month }
+
+
+
+
+                    });
+        }
     }
 
 }

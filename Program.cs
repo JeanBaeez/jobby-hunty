@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using JobHunt.Areas.Identity;
 using JobHunt.Data;
 using Syncfusion.Blazor;
+using MudBlazor.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,6 +24,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped<JobHunt.Services.Job.IJobService, JobHunt.Services.Job.JobService>();
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt7QHFqUUdrXVNbdV5dVGpAd0N3RGlcdlR1fUUmHVdTRHRbQl9iS39bdUxgXnxednw=;Mgo+DSMBPh8sVXJwS0d+WFBPd11dXmJWd1p/THNYflR1fV9DaUwxOX1dQl9nSXxSdERrWnZdd3dXRGU=;ORg4AjUWIQA/Gnt2UVhhQlVFfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX5Rd0diUXxXc3NWRWhd;Mgo+DSMBMAY9C3t2UVhhQlVFfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX5Rd0diUXxXc3NWQ2Nb;MzA5ODUyOEAzMjM0MmUzMDJlMzBMTzl4bUFzTkt5YmtCeFVvNjZ6SHpJZktjVURCNzNJYnZJK3lJeFJwNVBVPQ==;MzA5ODUyOUAzMjM0MmUzMDJlMzBGSGdXS3ZQVHJmemx6aXBPTmZjT1VORnIramIvb3kzblZnNkhXRFgzL1BZPQ==");
+builder.Services.AddMudServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

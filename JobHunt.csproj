@@ -18,7 +18,9 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.22" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.22" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.22" />
+        <PackageReference Include="MudBlazor" Version="6.15.0" />
         <PackageReference Include="Syncfusion.Blazor.Buttons" Version="24.2.4" />
+        <PackageReference Include="Syncfusion.Blazor.Cards" Version="24.2.5" />
         <PackageReference Include="Syncfusion.Blazor.Charts" Version="24.2.5" />
         <PackageReference Include="Syncfusion.Blazor.DataForm" Version="24.2.4" />
         <PackageReference Include="Syncfusion.Blazor.Inputs" Version="24.2.4" />
