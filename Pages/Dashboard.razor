@@ -24,9 +24,9 @@
                     @foreach (var job in jobs)
                     {
                         <div class="e-panel-content">
-                            <div>@job.Company</div>
-                            <div>@job.Company</div>
-                            <div>@job.Location</div>
+                          
+                            <div class="fw-bold">@job.Company</div>
+                            <div>@job.DateApplied.Value.ToShortDateString()</div>
                         </div>
                     }
                 </ContentTemplate>
@@ -36,16 +36,7 @@
                     <div>3</div>
                 </ContentTemplate>
             </DashboardLayoutPanel>
-            <DashboardLayoutPanel Row=1 Column=1>
-                <ContentTemplate>
-                    <div>4</div>
-                </ContentTemplate>
-            </DashboardLayoutPanel>
-            <DashboardLayoutPanel Row=1 Column=2>
-                <ContentTemplate>
-                    <div>5</div>
-                </ContentTemplate>
-            </DashboardLayoutPanel>
+        
         </DashboardLayoutPanels>
     </SfDashboardLayout>
 </div>
@@ -58,11 +49,12 @@
 </style>
 
 @code {
-    private List<Job> jobs = new List<Job>();
+    private IEnumerable<Job> jobs;
+
 
     protected override async Task OnInitializedAsync()
     {
-        var jobs = await _JobService.GetJobsAsync();
+        jobs =  await _JobService.GetJobsAsync();
     }
 
 }
